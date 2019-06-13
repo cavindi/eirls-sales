@@ -1,0 +1,9 @@
+{
+    "/api": {
+        "target": "http://eirls-sales.herokuapp.com/api",
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

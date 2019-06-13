@@ -1,0 +1,138 @@
+<div class="container">
+
+  <h2>Enquiry</h2>
+  <form #enquiryForm="ngForm" (ngSubmit)="onSubmit()" class="mt-4">
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="id">Order ID</label>
+        <input #id="ngModel" [(ngModel)]="enquiry.id" name="id" id="id" type="text" class="form-control"
+          [readonly]="true">
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="customer">Customer</label>
+        <select #customer="ngModel" [(ngModel)]="enquiry.customer" [compareWith]="compareByOptionId" name="customer"
+          id="customer" class="form-control" required [disabled]="isReadOnly">
+          <option *ngFor="let customer of customerList" [ngValue]="customer"> {{customer.name}} </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="deliveryMethod">Delivery Method</label>
+        <select #deliveryMethod="ngModel" [(ngModel)]="enquiry.deliveryMethod" name="deliveryMethod" id="deliveryMethod"
+          class="form-control" required>
+          <option value="courier">Courier</option>
+          <option value="pickup">Pick Up</option>
+        </select>
+        <div class="invalid-feedback d-block" *ngIf="deliveryMethod.touched && deliveryMethod.invalid"> Delivery Method
+          is Required </div>
+      </div>
+
+      <div class="form-group col-md-3" *ngIf="enquiry.deliveryMethod == 'courier'">
+        <label for="courierName">Courier Name</label>
+        <input #courierName="ngModel" [(ngModel)]="enquiry.courierName" name="courierName" id="courierName" type="text"
+          class="form-control" [readonly]="isReadOnly">
+      </div>
+
+      <div class="form-group col-md-3" *ngIf="enquiry.deliveryMethod == 'courier'">
+        <label for="courierTelephone">Courier Telephone</label>
+        <input #courierTelephone="ngModel" [(ngModel)]="enquiry.courierTelephone" name="courierTelephone" id="id"
+          type="text" class="form-control" [readonly]="isReadOnly">
+      </div>
+
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="createdDate">Created Date</label>
+        <input #createdDate="ngModel" [(ngModel)]="enquiry.createdDate" name="createdDate" id="createdDate" type="text"
+          class="form-control" [readonly]="true">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="dueDate">Due Date</label>
+        <input #dueDate="ngModel" [(ngModel)]="enquiry.dueDate" name="dueDate" id="dueDate" type="datetime-local"
+          class="form-control">
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="id">Credit Status</label>
+        <select #creditStatus="ngModel" [(ngModel)]="enquiry.creditStatus" name="creditStatus" id="creditStatus"
+          type="text" class="form-control" required>
+          <option value="CLEAR">CLEAR</option>
+          <option value="BLOCKED">BLOCKED</option>
+          <option value="PENDING">PENDING</option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-3">
+        <label for="id">Status</label>
+        <select #status="ngModel" [(ngModel)]="enquiry.status" name="status" id="status" type="text"
+          class="form-control" required>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-3">
+        <label for="id">Order Status</label>
+        <select #orderStatus="ngModel" [(ngModel)]="enquiry.orderStatus" name="orderStatus" id="orderStatus" type="text"
+          class="form-control" [disabled]="enquiry.status == 'Pending' || enquiry.status == 'Cancelled'">
+          <option value="New">New</option>
+          <option value="Production">Production</option>
+          <option value="Shipped">Shipped</option>
+        </select>
+      </div>
+    </div>
+
+    <h4>Enquiry Items</h4>
+
+    <table class="table table-bordered col-md-9 mt-3">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let enquiryItem of enquiry.enquiryItems; let i = index">
+          <td>{{enquiryItem.item.name}}</td>
+          <td>{{enquiryItem.quantity}}</td>
+          <td>
+            <button class="btn btn-danger" type="button" (click)="deleteItem(i)" [disabled]="isReadOnly">-</button>
+          </td>
+        </tr>
+
+        <!-- to add enquiry item -->
+        <tr>
+          <td>
+            <select [(ngModel)]="newEnquiryItem.item" name="newEnquiryItem" id="newEnquiryItem" class="form-control"
+              [disabled]="isReadOnly">
+              <option *ngFor="let item of itemList" [ngValue]="item"> {{item.name}} </option>
+            </select>
+          </td>
+          <td>
+            <input class="form-control" type="number" id="newEnquiryItemQuantity" [(ngModel)]="newEnquiryItem.quantity"
+              name="newEnquiryItemQuantity" [disabled]="isReadOnly" />
+          </td>
+          <td>
+            <button class="btn btn-info" type="button" (click)="addItem()" [disabled]="isReadOnly">+</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="btn-group" role="group">
+      <button class="btn btn-success" [disabled]="!enquiryForm.valid || isReadOnly">Save</button>
+      <button class="btn btn-primary" *ngIf="enquiry.id" type="button" (click)="edit()">Edit</button>
+      <button class="btn btn-danger" *ngIf="enquiry.id" type="button" (click)="delete()">Delete</button>
+    </div>
+  </form>
+</div>
