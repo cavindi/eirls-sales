@@ -41,6 +41,7 @@ export class ManageCustomerComponent implements OnInit {
 
   delete() {
     this.customerService.deleteCustomer(this.id).subscribe(data => {
+      this.toastr.success("Customer details deleted successfully!", "Success");
       this.router.navigateByUrl('customers');
       console.log(data);
     });
@@ -49,6 +50,7 @@ export class ManageCustomerComponent implements OnInit {
   onSubmit() {
     this.customerService.addCustomer(this.customerDetails).subscribe(data => {
       console.log(data);
+      this.toastr.success("Customer details updated successfully!", "Success");
     });
   }
 

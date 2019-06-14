@@ -42,7 +42,6 @@
         <input #courierTelephone="ngModel" [(ngModel)]="enquiry.courierTelephone" name="courierTelephone" id="id"
           type="text" class="form-control" [readonly]="isReadOnly">
       </div>
-
     </div>
 
     <div class="form-row">
@@ -58,11 +57,10 @@
       </div>
     </div>
 
-
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="id">Credit Status</label>
-        <select #creditStatus="ngModel" [(ngModel)]="enquiry.creditStatus" name="creditStatus" id="creditStatus"
+        <select #creditStatus="ngModel" [(ngModel)]="enquiry.customer.paymentFlag" name="creditStatus" id="creditStatus"
           type="text" class="form-control" required>
           <option value="CLEAR">CLEAR</option>
           <option value="BLOCKED">BLOCKED</option>
@@ -72,7 +70,7 @@
 
       <div class="form-group col-md-3">
         <label for="id">Status</label>
-        <select #status="ngModel" [(ngModel)]="enquiry.status" name="status" id="status" type="text"
+        <select #status="ngModel" [(ngModel)]="enquiry.status" (ngModelChange)="onChangeStatus($event)" name="status" id="status" type="text"
           class="form-control" required>
           <option value="Pending">Pending</option>
           <option value="Confirmed">Confirmed</option>
@@ -87,6 +85,18 @@
           <option value="New">New</option>
           <option value="Production">Production</option>
           <option value="Shipped">Shipped</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="id">Customer Returns</label>
+        <select #returns="ngModel" [(ngModel)]="enquiry.returns" (ngModelChange)="onChange($event)" name="returns"
+          id="returns" type="text" class="form-control">
+          <option value="Exchange">Exchange</option>
+          <option value="Credit">Credit</option>
+          <option value="Repair">Repair</option>
         </select>
       </div>
     </div>
@@ -130,7 +140,7 @@
     </table>
 
     <div class="btn-group" role="group">
-      <button class="btn btn-success" [disabled]="!enquiryForm.valid || isReadOnly">Save</button>
+      <button class="btn btn-success" [disabled]="!enquiryForm.valid || isReadOnly || enquiry.creditStatus != 'CLEAR'">Save</button>
       <button class="btn btn-primary" *ngIf="enquiry.id" type="button" (click)="edit()">Edit</button>
       <button class="btn btn-danger" *ngIf="enquiry.id" type="button" (click)="delete()">Delete</button>
     </div>

@@ -30,4 +30,8 @@ export class EnquiryService {
   deleteEnquiry(id) {
     return this.http.delete(this.apiUrl + `/${id}`);
   }
+
+  sendToProduction(enquiry) {
+    return this.http.post(this.apiUrl + "/production", enquiry);
+  }
 }

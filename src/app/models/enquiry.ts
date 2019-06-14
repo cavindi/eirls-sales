@@ -8,9 +8,10 @@ export class Enquiry {
     courierTelephone: string;
     creditStatus: string;
     createdDate: Date;
-    dueDate: Date;
+    dueDate: string;
     status : string;
     orderStatus : string;
+    returns : string;
     enquiryItems: EnquiryItem[] = [];
     customer: Customer = new Customer();
 
@@ -24,5 +25,6 @@ export class Enquiry {
         this.dueDate = null;
         this.status = "Pending";
         this.orderStatus = "New";
+        this.returns = null;
     }
 }

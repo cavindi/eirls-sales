@@ -8,6 +8,7 @@ import { ItemService } from '../services/item.service';
 import { Customer } from '../models/customer';
 import { Item } from '../models/item';
 import { EnquiryItem } from '../models/enquiry-item';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-manage-enquiry',
@@ -33,11 +34,8 @@ export class ManageEnquiryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.fetchData();
-
     this.id = this.route.snapshot.paramMap.get('id');
-
     if (this.id) {
       this.enquiryService.getEnquiry(this.id).subscribe(data => {
         this.enquiry = data;
@@ -49,14 +47,11 @@ export class ManageEnquiryComponent implements OnInit {
   }
 
   fetchData() {
-
     this.customerService.getAll().subscribe(data => {
-      // console.log(data);
       this.customerList = data;
     });
 
     this.itemService.getAll().subscribe(data => {
-      // console.log(data);
       this.itemList = data;
     });
   }
@@ -67,21 +62,37 @@ export class ManageEnquiryComponent implements OnInit {
 
   delete() {
     this.enquiryService.deleteEnquiry(this.id).subscribe(data => {
+      this.toastr.success("Enquiry/Order deleted successfully!", "Success");
       this.router.navigateByUrl('enquiries');
-      console.log(data);
+      // console.log(data);
     });
   }
 
   onSubmit() {
+    
+    if(this.enquiry.enquiryItems.length > 0){
 
-    console.log(this.enquiry);
+      this.makeEnquiry();
+    }
+    else{
+      this.toastr.error("No Items Added!");
+    }
+
+  }
+
+  makeEnquiry(){
+
+    let date = this.enquiry.dueDate;
+    let dueDate =  moment(date, 'YYYY-MM-DD h:m:s A').format('DD-MM-YYYY HH:mm:ss');
+    // console.log(dueDate);
+
+    this.enquiry.dueDate = dueDate;
+    // console.log(this.enquiry);
 
     this.enquiryService.addEnquiry(this.enquiry).subscribe(data => {
-      // console.log(data);
       this.toastr.success("Successful!", "Success");
       this.router.navigateByUrl('/enquiries');
     });
-
   }
 
   compareByOptionId(idFirst, idSecond) {
@@ -94,7 +105,6 @@ export class ManageEnquiryComponent implements OnInit {
       this.toastr.error("Insufficient Quantity!", "Error")
     }
     else if (this.newEnquiryItem.item.id && this.newEnquiryItem.quantity) {
-      // console.log(this.newEnquiryItem);
       this.enquiry.enquiryItems.push(this.newEnquiryItem);
       this.newEnquiryItem = new EnquiryItem();
     }
@@ -108,4 +118,26 @@ export class ManageEnquiryComponent implements OnInit {
     this.enquiry.enquiryItems.splice(index, 1);
   }
 
+  onChange(returnType) {
+    if (returnType == "Exchange") {
+      this.router.navigateByUrl("/enquiries/new");
+    }
+    else if (returnType == "Credit") {
+      this.toastr.success("Money credited to customer!", "Success");
+    }
+    else if (returnType == "Repair") {
+      this.enquiryService.sendToProduction(this.enquiry).subscribe(data => {
+        this.toastr.success("Sent to production!", "Success");
+      });
+    }
+  }
+
+  onChangeStatus(event){
+
+    if(this.enquiry.orderStatus != 'New'){
+      this.toastr.error("Order cannot be cancelled!");
+      this.enquiry.status = '';
+    }
+
+  }
 }
