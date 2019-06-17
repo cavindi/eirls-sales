@@ -70,8 +70,8 @@
 
       <div class="form-group col-md-3">
         <label for="id">Status</label>
-        <select #status="ngModel" [(ngModel)]="enquiry.status" (ngModelChange)="onChangeStatus($event)" name="status" id="status" type="text"
-          class="form-control" required>
+        <select #status="ngModel" [(ngModel)]="enquiry.status" (ngModelChange)="onChangeStatus($event)" name="status"
+          id="status" type="text" class="form-control" required>
           <option value="Pending">Pending</option>
           <option value="Confirmed">Confirmed</option>
           <option value="Cancelled">Cancelled</option>
@@ -140,7 +140,8 @@
     </table>
 
     <div class="btn-group" role="group">
-      <button class="btn btn-success" [disabled]="!enquiryForm.valid || isReadOnly || enquiry.creditStatus != 'CLEAR'">Save</button>
+      <button class="btn btn-success"
+        [disabled]="!enquiryForm.valid || isReadOnly || enquiry.customer.paymentFlag != 'CLEAR'">Save</button>
       <button class="btn btn-primary" *ngIf="enquiry.id" type="button" (click)="edit()">Edit</button>
       <button class="btn btn-danger" *ngIf="enquiry.id" type="button" (click)="delete()">Delete</button>
     </div>

@@ -1,0 +1,18 @@
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Order ID</th>
+        <th scope="col">Customer ID</th>
+        <th scope="col">Return Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let enquiry of enquiryList">
+        <td>{{ enquiry.id }}</td>
+        <td>{{ enquiry.customer.id }}</td>
+        <td>{{ enquiry.returns }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

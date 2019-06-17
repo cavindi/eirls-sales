@@ -51,6 +51,7 @@ export class ManageCustomerComponent implements OnInit {
     this.customerService.addCustomer(this.customerDetails).subscribe(data => {
       console.log(data);
       this.toastr.success("Customer details updated successfully!", "Success");
+      this.router.navigateByUrl('customers');
     });
   }
 

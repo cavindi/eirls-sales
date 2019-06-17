@@ -13,25 +13,29 @@
                                         class="form-control" [readonly]="true">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input #name="ngModel" [(ngModel)]="customerDetails.name" name="name" id="name"
-                                    type="text" class="form-control col-md-9" required [readonly]="isReadOnly">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="name">Name</label>
+                                    <input #name="ngModel" [(ngModel)]="customerDetails.name" name="name" id="name"
+                                        type="text" class="form-control col-md-9" required [readonly]="isReadOnly">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="tradingName">Trading Name</label>
+                                    <input #name="ngModel" [(ngModel)]="customerDetails.tradingName" name="tradingName"
+                                        id="tradingName" type="text" class="form-control col-md-9"
+                                        [readonly]="isReadOnly">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="paymentFlag">Credit Status</label>
+                                    <select #name="ngModel" [(ngModel)]="customerDetails.paymentFlag" name="paymentFlag"
+                                        id="paymentFlag" class="form-control" required [disabled]="isReadOnly">
+                                        <option value="CLEAR">CLEAR</option>
+                                        <option value="BLOCKED">BLOCKED</option>
+                                        <option value="PENDING">PENDING</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="tradingName">Trading Name</label>
-                                <input #name="ngModel" [(ngModel)]="customerDetails.tradingName" name="tradingName"
-                                    id="tradingName" type="text" class="form-control col-md-9" [readonly]="isReadOnly">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="paymentFlag">Credit Status</label>
-                                <select #name="ngModel" [(ngModel)]="customerDetails.paymentFlag" name="paymentFlag"
-                                    id="paymentFlag" class="form-control" required [disabled]="isReadOnly">
-                                    <option value="CLEAR">CLEAR</option>
-                                    <option value="BLOCKED">BLOCKED</option>
-                                    <option value="PENDING">PENDING</option>
-                                </select>
-                            </div>
+
                             <div class="form-group">
                                 <label for="mainLocation">Main Location</label>
                                 <input #name="ngModel" [(ngModel)]="customerDetails.mainLocation" name="mainLocation"
@@ -61,7 +65,7 @@
                                     id="telephone" type="text" class="form-control col-md-9" required
                                     [readonly]="isReadOnly">
                             </div>
-                            <div>
+                            <div class="btn-group">
                                 <button class="btn btn-success"
                                     [disabled]="!customerForm.valid || isReadOnly">Save</button>
                                 <button *ngIf="customerDetails.id" type="button" (click)="edit()"

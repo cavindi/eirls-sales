@@ -21,6 +21,7 @@ import { ViewOrderComponent } from './view-order/view-order.component';
 import { EnquiryService } from './services/enquiry.service';
 import { OrdersService } from './services/orders.service';
 import { PromotionComponent } from './promotion/promotion.component';
+import { ViewReturnsComponent } from './view-returns/view-returns.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PromotionComponent } from './promotion/promotion.component';
     ViewCustomerComponent,
     ViewEnquiryComponent,
     ViewOrderComponent,
-    PromotionComponent
+    PromotionComponent,
+    ViewReturnsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ import { PromotionComponent } from './promotion/promotion.component';
     HttpClientModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
+      { path: '', component: HomeComponent },
       { path: 'home', component: HomeComponent },
       { path: 'login', component: LoginComponent },
       { path: 'customers/new', component: ManageCustomerComponent },
@@ -57,6 +60,7 @@ import { PromotionComponent } from './promotion/promotion.component';
       { path: 'orders/:id', component: ManageOrderComponent },
       { path: 'orders', component: ViewOrderComponent },
       { path: 'returns', component: ManageReturnsComponent },
+      { path: 'view-returns', component: ViewReturnsComponent },
       { path: 'promotions', component: PromotionComponent }
     ])
   ],
