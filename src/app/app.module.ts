@@ -12,16 +12,14 @@ import { LoginComponent } from './login/login.component';
 import { ManageCustomerComponent } from './manage-customer/manage-customer.component';
 import { ManageEnquiryComponent } from './manage-enquiry/manage-enquiry.component';
 import { HomeComponent } from './home/home.component';
-import { ManageOrderComponent } from './manage-order/manage-order.component';
 import { ManageReturnsComponent } from './manage-returns/manage-returns.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ViewCustomerComponent } from './view-customer/view-customer.component';
 import { ViewEnquiryComponent } from './view-enquiry/view-enquiry.component';
-import { ViewOrderComponent } from './view-order/view-order.component';
 import { EnquiryService } from './services/enquiry.service';
-import { OrdersService } from './services/orders.service';
 import { PromotionComponent } from './promotion/promotion.component';
 import { ViewReturnsComponent } from './view-returns/view-returns.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -30,12 +28,10 @@ import { ViewReturnsComponent } from './view-returns/view-returns.component';
     ManageCustomerComponent,
     ManageEnquiryComponent,
     HomeComponent,
-    ManageOrderComponent,
     ManageReturnsComponent,
     NavbarComponent,
     ViewCustomerComponent,
     ViewEnquiryComponent,
-    ViewOrderComponent,
     PromotionComponent,
     ViewReturnsComponent
   ],
@@ -46,28 +42,11 @@ import { ViewReturnsComponent } from './view-returns/view-returns.component';
     // NgbModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      { path: 'home', component: HomeComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'customers/new', component: ManageCustomerComponent },
-      { path: 'customers/:id', component: ManageCustomerComponent },
-      { path: 'customers', component: ViewCustomerComponent },
-      { path: 'enquiries/new', component: ManageEnquiryComponent },
-      { path: 'enquiries/:id', component: ManageEnquiryComponent },
-      { path: 'enquiries', component: ViewEnquiryComponent },
-      { path: 'orders/new', component: ManageOrderComponent },
-      { path: 'orders/:id', component: ManageOrderComponent },
-      { path: 'orders', component: ViewOrderComponent },
-      { path: 'returns', component: ManageReturnsComponent },
-      { path: 'view-returns', component: ViewReturnsComponent },
-      { path: 'promotions', component: PromotionComponent }
-    ])
+    AppRoutingModule
   ],
   providers: [
     CustomerService,
-    EnquiryService,
-    OrdersService
+    EnquiryService
   ],
   bootstrap: [AppComponent]
 })
