@@ -42,6 +42,7 @@ import { AppRoutingModule } from './app-routing.module';
     // NgbModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    
     AppRoutingModule
   ],
   providers: [
